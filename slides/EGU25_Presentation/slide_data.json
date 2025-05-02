@@ -5,7 +5,7 @@
     },
     {
         "image": "images/slide_2.png",
-        "notes": "Slide 2 \u2013 Characteristics of Karst Systems and Modeling Approach\r- Karst systems present unique hydrological challenges due to their structural complexity.\r- Key characteristics:\r- High heterogeneity and anisotropy in both porosity and permeability.\r- A dual response behavior, resulting from the coexistence of matrix and conduit systems.\r- The matrix provides slow, diffuse flow.\r- The conduits allow for fast, concentrated flow.\r- To simulate these dynamics, we use semi-distributed hydrological models, such as LuKARS 3.0.\r- These models are often applied to simulate discharge at karst springs."
+        "notes": "Slide 2 \u2013 Characteristics of Karst Systems and Modeling Approach\r- Karst systems present unique hydrological challenges due to their structural complexity.\r- Key characteristics:\r    - High heterogeneity and anisotropy in both porosity and permeability.\r    - A dual response behavior, resulting from the coexistence of matrix and conduit systems.\r        - The matrix provides slow, diffuse flow.\r        - The conduits allow for fast, concentrated flow.\r- To simulate these dynamics, we use semi-distributed hydrological models, such as LuKARS 3.0.\r- These models are often applied to simulate discharge at karst springs."
     },
     {
         "image": "images/slide_3.png",
