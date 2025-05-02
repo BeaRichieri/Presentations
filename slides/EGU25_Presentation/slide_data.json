@@ -1,0 +1,66 @@
+[
+    {
+        "image": "images/slide_1.png",
+        "notes": "Slide 1 \u2013 Introduction to LuKARS 3.0\r- Welcome to this presentation, which introduces LuKARS 3.0.\r- LuKARS 3.0 is a semi-distributed hydrological model developed for simulating flow and transport processes in karst systems.\r- The upcoming slides include speaker notes, which:\r- Support structured learning\r- Can be easily translated into different languages, e.g. using SlideJet"
+    },
+    {
+        "image": "images/slide_2.png",
+        "notes": "Slide 2 \u2013 Characteristics of Karst Systems and Modeling Approach\r- Karst systems present unique hydrological challenges due to their structural complexity.\r- Key characteristics:\r- High heterogeneity and anisotropy in both porosity and permeability.\r- A dual response behavior, resulting from the coexistence of matrix and conduit systems.\r- The matrix provides slow, diffuse flow.\r- The conduits allow for fast, concentrated flow.\r- To simulate these dynamics, we use semi-distributed hydrological models, such as LuKARS 3.0.\r- These models are often applied to simulate discharge at karst springs."
+    },
+    {
+        "image": "images/slide_3.png",
+        "notes": "Slide 3 \u2013 Motivation for LuKARS 3.0 and LuKARS React\r- When using semi-distributed models, we face several key challenges:\r- A large number of parameters to calibrate.\r- The need to test multiple model structures.\r- Requirements for sensitivity analysis and uncertainty quantification.\r- These challenges demand:\r- A modeling framework that supports efficient, fast, and flexible batch simulations.\r- Multi-objective calibration approaches to reduce model equifinality and enhance reliability.\r- For example, incorporating reaction processes rather than relying solely on discharge fitting.\r- These needs led to the development of:\r- LuKARS 3.0 \u2013 for robust and flexible simulation of karst hydrology.\r- LuKARS React \u2013 for reactive transport modeling, enabling the coupling of flow and solute dynamics."
+    },
+    {
+        "image": "images/slide_4.png",
+        "notes": "Slide 4 \u2013 Semi-Distributed Model Concept\r- Semi-distributed models lump the system into buckets and transfer functions.\r- The final aim is to represent the discharge at the spring.\r- To include spatial variability, the system is divided into Hydrological Response Units (HRUs).\r- HRUs are characterized by similar hydrological and soil properties.\r- In the LuKARS model:\r- Each HRU, called a hydrotope, contributes to spring discharge.\r- It has a slow flow component through the matrix representing infiltration.\r- It also has a direct flow component to the spring."
+    },
+    {
+        "image": "images/slide_5.png",
+        "notes": "Slide 5 \u2013 Code Optimization and Flexibility\r- LuKARS 3.0 was developed starting from LuKARS, with a focus on code optimization and flexibility.\r- The code was rewritten using the Numba Python library, which led to a 420\u00d7 reduction in runtime.\r- The model allows for flexible implementation and execution without needing to modify the Python script.\r- All input parameters and settings are defined in a separate file, which:\r- Allows definition of an arbitrary number of hydrotopes\r- Allows specification of fluxes between buckets\r- The code also automatically detects the operating system and runs on both Windows and Linux."
+    },
+    {
+        "image": "images/slide_6.png",
+        "notes": "Slide 6 \u2013 Coupling with PHREEQC\r- To implement a coupled flow and transport model, LuKARS and PHREEQC are sequentially coupled.\r- PHREEQC is a module of the geochemical code PHREEQC, designed to interface with other software, including Python."
+    },
+    {
+        "image": "images/slide_7.png",
+        "notes": "Slide 7 \u2013 Flow and Mixing\r- First, the code solves all the flow equations.\r- Then, for each time step and each bucket, the model uses the internal fluxes to compute the percentage mixing.\r- This represents the relative water contribution from the other buckets."
+    },
+    {
+        "image": "images/slide_8.png",
+        "notes": "Slide 8 \u2013 Reactive Transport\r- After that, starting from the percentage mixing, PHREEQC computes the reactive transport in each bucket at each time step.\r- This ensures that solute transport is consistent with the computed flow contributions.\rThe water contribution is represented in PHREEQC using a solution keyword, through which PHREEQC calculates the chemical speciation of the water."
+    },
+    {
+        "image": "images/slide_9.png",
+        "notes": "Slide 9 \u2013 Representation of Solutions in the Compartments\r- The solutions in the upper compartment buckets can be initialized using different approaches:\r- Inverse modeling\r- Field observations\r- Equilibrium assumptions with a specific solid phase\r- The solutions in the bottom compartment buckets can represent:\r- Instantaneous perfect mixing based on internal fluxes\r- Dilution of a contaminant over time\r- Piston effects or flushing behavior of stored solids in the saturated zone"
+    },
+    {
+        "image": "images/slide_10.png",
+        "notes": "Slide 10 \u2013 Case Study: Kerschbaum Spring (Austria)\r- The model was tested for the Kerschbaum spring, located in Austria.\r- First, a multi-model calibration was performed to identify the model configuration that best represents the spring discharge.\r- A configuration with two hydrotopes was selected.\r- Then, the coupled flow and transport model was implemented, assuming:\r- At each time step, the discharge at the spring results from the instantaneous and complete mixing of water from:\r- Bucket M\r- And Hydrotope 2\r- Solution 1 and Solution 2 were defined using inverse modeling, based on the observed concentrations at the spring."
+    },
+    {
+        "image": "images/slide_11.png",
+        "notes": "Slide 11 \u2013 Parameter Uncertainty and Posterior Selection\r- To account for parameter uncertainty, 100,000 parameter sets were sampled from a uniform prior distribution.\r- From these, an envelope of model realizations with a Nash-Sutcliffe efficiency coefficient (NSC) greater than 0.5 was selected as the posterior.\r- In the figure on the slide:\r- The left panel shows the prior and posterior distributions for the most sensitive parameter.\r- The right panel shows the distributions for the least sensitive parameter."
+    },
+    {
+        "image": "images/slide_12.png",
+        "notes": "Slide 12 \u2013 Uncertainty Bands for Discharge and Electrical Conductivity\r- This slide shows the uncertainty bands based on the posterior parameter distributions:\r- Left: Simulated spring discharge\r- Right: Simulated electrical conductivity\r- The shaded bands represent:\r- Light gray \u2013 full range of the posterior\r- Dark gray \u2013 percentile range\r- Red \u2013 interquartile range\r- For spring discharge:\r- The uncertainty bands well represent the observations, which are shown with a blue line.\r- For electrical conductivity:\r- The bands capture the overall dynamics, but they underestimate:\r- The peaks in winter 2018\u20132019\r- The base flow increase in August 2019\r- These underestimations can be explained as follows:\r- The base flow underestimation is related to the selected model configuration, which includes only a single linear bucket in the bottom compartment, representing matrix base flow.\r- The peak underestimation in winter is due to the lack of measured concentrations during that period.\r- These concentrations were therefore not available for inverse modeling, and Solutions 1 and 2 do not reflect this extreme event"
+    },
+    {
+        "image": "images/slide_13.png",
+        "notes": "Slide 13 \u2013 Sodium Chloride Intrusion and Conductivity Peaks\r- The increase in electrical conductivity observed in winter 2018\u20132019 may be due to sodium chloride intrusion into the spring water.\r- Sodium chloride is used as a deicing agent during winter.\r- This explanation is supported by model results:\r- The uncertainty bands derived from the posterior distributions show an increase in both chloride and sodium concentrations during that period.\r- This increase is not visible in the observed data, likely due to missing concentration measurements."
+    },
+    {
+        "image": "images/slide_14.png",
+        "notes": "Slide 14 \u2013 Outlook and Conclusions\r- This is the final slide, presenting the main conclusions and an outlook on future work."
+    },
+    {
+        "image": "images/slide_15.png",
+        "notes": "No notes"
+    },
+    {
+        "image": "images/slide_16.png",
+        "notes": "No notes"
+    }
+]
