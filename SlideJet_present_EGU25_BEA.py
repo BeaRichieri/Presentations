@@ -114,7 +114,7 @@ st.set_page_config(
 
 # Folder to your presentation
 
-presentation_folder = "Presentations/slides/EGU25_Presentation"
+presentation_folder = "slides/EGU25_Presentation"
 
 # Presettings - Here you can adjust the application to your specific application
 
